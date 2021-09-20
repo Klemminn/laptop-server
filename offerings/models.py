@@ -6,6 +6,7 @@ from laptop.utils import handle_upload
 def ImageField():
     return models.ImageField(
         null=True,
+        blank=True,
         upload_to=handle_upload,
         validators=[validate_image_extension],
     )
@@ -80,11 +81,10 @@ class Laptop(models.Model):
     id = models.AutoField(primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
 
-    url = models.URLField(default='')
     name = models.CharField(max_length=100)
     sku = models.CharField(max_length=30, unique=True)
     vendor = models.ForeignKey(Vendor, related_name='laptops', to_field='code', on_delete=models.CASCADE)
-    cpu_family = models.ForeignKey(CpuFamily, related_name='laptops', to_field='code', on_delete=models.CASCADE, null=True)
+    cpu_family = models.ForeignKey(CpuFamily, related_name='laptops', to_field='code', on_delete=models.CASCADE)
     cpu_model = models.CharField(max_length=30)
     ram = models.IntegerField()
     hdd = models.IntegerField()
